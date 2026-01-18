@@ -1,12 +1,38 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useScrollProgress } from '@/hooks/useScrollProgress';
+import { VisualizationEngine } from '@/components/VisualizationEngine';
+import { StageIndicator } from '@/components/StageIndicator';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { SkillsSection } from '@/components/sections/SkillsSection';
+import { ExperienceSection } from '@/components/sections/ExperienceSection';
+import { ProjectsSection } from '@/components/sections/ProjectsSection';
+import { ContactSection } from '@/components/sections/ContactSection';
 
 const Index = () => {
+  const { progress, stage, stageProgress } = useScrollProgress();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="relative min-h-screen">
+      {/* Particle Canvas Background */}
+      <VisualizationEngine 
+        scrollProgress={progress} 
+        stage={stage} 
+        stageProgress={stageProgress} 
+      />
+
+      {/* Fixed Stage Indicator */}
+      <StageIndicator currentStage={stage} />
+
+      {/* Narrative Layer - Scrollable Content */}
+      <main className="relative z-10">
+        <HeroSection />
+        <SkillsSection />
+        <ExperienceSection />
+        <ProjectsSection />
+        <ContactSection />
+      </main>
+
+      {/* Noise Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-20 bg-noise opacity-[0.02]" />
     </div>
   );
 };
